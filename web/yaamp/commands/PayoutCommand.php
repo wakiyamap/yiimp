@@ -135,10 +135,11 @@ class PayoutCommand extends CConsoleCommand
 
 		$DCR = ($coin->rpcencoding == 'DCR' || $coin->getOfficialSymbol() == 'DCR');
 		$DGB = ($coin->rpcencoding == 'DGB' || $coin->getOfficialSymbol() == 'DGB');
+		$MONA = ($coin->rpcencoding == 'MONA' || $coin->getOfficialSymbol() == 'MONA');
 
 		$remote = new WalletRPC($coin);
 		$account = '';
-		if ($DCR || $DGB) $account = '*';
+		if ($DCR || $DGB || $MONA) $account = '*';
 		$rawtxs = $remote->listtransactions($account, 25000);
 
 		foreach ($ids as $uid => $user_addr)

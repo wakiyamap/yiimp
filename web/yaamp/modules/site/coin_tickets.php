@@ -2,8 +2,9 @@
 
 if (!$coin) $this->goback();
 $DCR = ($coin->rpcencoding == 'DCR');
+$MONA = ($coin->rpcencoding == 'MONA');
 
-if (!$DCR) $this->goback();
+if (!$DCR || !$MONA) $this->goback();
 
 $this->pageTitle = 'Tickets - '.$coin->symbol;
 
@@ -83,7 +84,7 @@ echo <<<end
 </thead><tbody>
 end;
 
-$account = $DCR ? '*' : '';
+$account = $DCR || $MONA ? '*' : '';
 
 $txs = $remote->listtransactions($account, $maxrows);
 
