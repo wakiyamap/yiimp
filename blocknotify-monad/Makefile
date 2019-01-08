@@ -5,10 +5,10 @@ ROOT=`pwd`
 all:
 	rm -f $(OUT_GO)
 	rm -rf vendor
-	~/go/bin/glide install
+	mkdir vendor
 	ln -s ../vendor vendor/src
 	rm -f vendor/src/github.com/wakiyamap/rpcclient/wallet.go
-	GOPATH="$(GOPATH):$(ROOT)/vendor" go build
+	GO111MODULE=on GOPATH="$(GOPATH):$(ROOT)/vendor" go build
 
 install: all
 	strip -s $(OUT_GO)

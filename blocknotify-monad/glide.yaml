@@ -1,7 +1,0 @@
-package: .
-import:
-- package: github.com/wakiyamap/monad
-  subpackages:
-  - rpcclient
-  - wire
-- package: github.com/wakiyamap/monautil
