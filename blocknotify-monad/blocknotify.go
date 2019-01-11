@@ -67,7 +67,7 @@ func main() {
 	}
 
 	connCfg := &rpcclient.ConnConfig{
-		Host:         "127.0.0.1:9400",
+		Host:         "127.0.0.1:9402",
 		Endpoint:     "ws", // websocket
 
 		User:         monadUser,
