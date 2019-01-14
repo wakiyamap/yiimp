@@ -44,11 +44,14 @@ function BackendCoinPayments($coin)
 	}
 
 	$txfee = floatval($coin->txfee);
+	if($coin->symbol == 'MONA') $min_payout = 0.01005;
+
 	$min_payout = max(floatval(YAAMP_PAYMENTS_MINI), floatval($coin->payout_min), $txfee);
 
 	if(date("w", time()) == 0 && date("H", time()) > 18) { // sunday evening, minimum reduced
 		$min_payout = max($min_payout/10, $txfee);
 		if($coin->symbol == 'DCR') $min_payout = 0.01005;
+		if($coin->symbol == 'MONA') $min_payout = 0.01005;
 	}
 
 	$users = getdbolist('db_accounts', "balance>$min_payout AND coinid={$coin->id} ORDER BY balance DESC");
@@ -107,7 +110,7 @@ function BackendCoinPayments($coin)
 		$total_to_pay += round($user->balance, 8);
 		$addresses[$user->username] = round($user->balance, 8);
 		// transaction xxx has too many sigops: 1035 > 1000
-		if ($coin->symbol == 'DCR' && count($addresses) > 990) {
+		if (($coin->symbol == 'DCR' || $coin->symbol == 'MONA') && count($addresses) > 990) {
 			debuglog("payment: more than 990 {$coin->symbol} users to pay, limit to top balances...");
 			break;
 		}
@@ -196,6 +199,8 @@ function BackendCoinPayments($coin)
 
 	if (!$coin->txmessage)
 		$tx = $remote->sendmany($account, $addresses);
+        elseif($coin->symbol == 'MONA')
+                $tx = $remote->sendmany($account, $addresses);
 	else
 		$tx = $remote->sendmany($account, $addresses, 1, YAAMP_SITE_NAME);
 
@@ -288,6 +293,8 @@ function BackendCoinPayments($coin)
 	if (!empty($addresses))
 	{
 		if (!$coin->txmessage)
+			$tx = $remote->sendmany($account, $addresses);
+		elseif($coin->symbol == 'MONA')
 			$tx = $remote->sendmany($account, $addresses);
 		else
 			$tx = $remote->sendmany($account, $addresses, 1, YAAMP_SITE_NAME." retry");
