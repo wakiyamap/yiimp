@@ -44,7 +44,7 @@ function BackendCoinPayments($coin)
 	}
 
 	$txfee = floatval($coin->txfee);
-	if($coin->symbol == 'MONA') $min_payout = 0.01005;
+	if($coin->symbol == 'MONA') $txfee = 0.001;
 
 	$min_payout = max(floatval(YAAMP_PAYMENTS_MINI), floatval($coin->payout_min), $txfee);
 
