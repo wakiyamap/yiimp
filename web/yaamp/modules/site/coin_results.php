@@ -326,7 +326,7 @@ if (!empty($txs)) {
 			$txs_array[] = $tx;
 	}
 
-	krsort($txs_array);
+	if ($account != $MONA) krsort($txs_array);
 }
 
 // filter useless decred spent transactions

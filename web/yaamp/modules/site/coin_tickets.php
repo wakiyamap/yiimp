@@ -109,7 +109,8 @@ if (!empty($txs)) {
 		if (arraySafeVal($tx,'time',time()) > $list_since)
 			$txs_array[] = $tx;
 	}
-	krsort($txs_array);
+
+	if ($account != $MONA) krsort($txs_array);
 }
 
 $voted_txs = array();
