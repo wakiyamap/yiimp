@@ -22,7 +22,7 @@ import (
 const (
 	processName = "blocknotify"    // set the full path if required
 	stratumDest = "yaamp.com:3252" // stratum host:port
-	coinId = "393"                 // decred database coin id
+	coinId = "393"                 // monacoin database coin id
 
 	monadUser = "yiimprpc"
 	monadPass = "myMonadPassword"
